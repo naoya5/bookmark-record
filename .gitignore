@@ -43,5 +43,8 @@ next-env.d.ts
 # YoYo AI version control directory
 .yoyo/
 
+# Prisma
 /lib/generated/prisma
-/prisma
+/prisma/dev.db
+/prisma/dev.db-journal
+/prisma/migrations/
