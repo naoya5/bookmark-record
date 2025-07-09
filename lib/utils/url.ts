@@ -6,7 +6,8 @@
  */
 export const extractDomain = (url: string) => {
   try {
-    return new URL(url).hostname.replace("www.", "");
+    const hostname = new URL(url).hostname;
+    return hostname.startsWith("www.") ? hostname.substring(4) : hostname;
   } catch {
     // 無効なURLの場合は元の文字列を返す
     return url;
