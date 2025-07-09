@@ -6,7 +6,7 @@
  * データベース接続の効率化を図っています。
  */
 
-import { PrismaClient } from "@prisma/client";
+import { PrismaClient } from "./generated/prisma";
 
 //グローバルオブジェクトとしてPrismaインスタンスを保存するための型定義
 const globalForPrisma = globalThis as unknown as {
