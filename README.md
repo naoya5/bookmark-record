@@ -1,4 +1,31 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# ブックマーク管理アプリケーション
+
+![ホームページ](homepage-screenshot.png)
+
+トピック（カテゴリ）別にWebページのブックマークを整理・管理できるアプリケーションです。
+
+## 概要
+
+このアプリケーションは、Webページのブックマークを効率的に管理するためのツールです。トピック（カテゴリ）を作成し、そのトピックに関連するブックマークを整理できます。
+
+### 主な機能
+
+- **トピック管理**: ブックマークを整理するためのカテゴリ（トピック）を作成・編集・削除
+- **ブックマーク管理**: URLとコメントを含むブックマークの作成・編集・削除
+- **階層的な整理**: トピックごとにブックマークを分類して管理
+- **レスポンシブデザイン**: デスクトップとモバイルデバイスの両方に対応
+
+### 使用技術
+
+- **フロントエンド**: Next.js 15, React 19, TypeScript
+- **スタイリング**: Tailwind CSS, Radix UI
+- **データベース**: SQLite（Prisma ORM）
+- **状態管理**: SWR
+- **その他**: Lucide React（アイコン）、date-fns（日付処理）
+
+## 技術仕様
+
+このプロジェクトは [Next.js](https://nextjs.org) フレームワークを使用して構築されており、[`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app) でブートストラップされています。
 
 ## Getting Started
 
