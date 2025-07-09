@@ -89,13 +89,20 @@ export const TopicModal: React.FC<TopicModalProps> = ({
                 タイトル
               </label>
               <Input
+                id="title"
+                name="title"
                 value={topicForm.title}
                 onChange={(e) =>
                   setTopicForm({ ...topicForm, title: e.target.value })
                 }
                 className="border-amber-200 focus:ring-amber-500 focus:border-amber-500 rounded-xl"
                 placeholder="トピックタイトルを入力"
+                required
+                aria-describedby="title-hint"
               />
+              <p id="title-hint" className="text-xs text-gray-500 mt-1">
+                必須項目
+              </p>
             </div>
           </div>
 
