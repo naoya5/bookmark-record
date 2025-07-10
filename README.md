@@ -65,13 +65,14 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 - GitHub リポジトリにプロジェクトをプッシュしておく
 - Vercel アカウントを作成する
 
-### 2. データベースの準備
+### 2. Neon データベースの準備
 
-現在のプロジェクトは SQLite を使用していますが、Vercel では永続化されません。本番環境では以下のいずれかを使用することをお勧めします：
+このプロジェクトは Neon PostgreSQL を使用します：
 
-- **Vercel Postgres**: Vercel が提供する PostgreSQL サービス
-- **PlanetScale**: サーバーレス MySQL
-- **Supabase**: オープンソースの PostgreSQL
+1. [Neon Console](https://console.neon.tech)でアカウントを作成
+2. 新しいプロジェクトを作成
+3. データベース接続文字列をコピー
+4. `.env`ファイルに`DATABASE_URL`を設定
 
 ### 3. Vercel でのデプロイ手順
 
@@ -87,21 +88,30 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 Vercel ダッシュボードで以下の環境変数を設定してください：
 
 ```
-DATABASE_URL=your-production-database-url
+DATABASE_URL=your-neon-database-url
+```
+
+Neon の DATABASE_URL は以下の形式です：
+
+```
+postgresql://username:password@host/database?sslmode=require
 ```
 
 ### 5. データベースの初期化
 
-本番データベースを初期化するには、Vercel ダッシュボードのプロジェクト設定から以下のコマンドを実行してください：
+Neon データベースは既にマイグレーションが適用されているため、追加の初期化は不要です。
+
+もし新しいマイグレーションが必要な場合は、ローカルで以下を実行してください：
 
 ```bash
-npx prisma db push
+npx prisma migrate dev
 ```
 
 ### 注意事項
 
-- 本番環境では、`prisma/schema.prisma`で SQLite から PostgreSQL に変更することを推奨します
+- Neon の DATABASE_URL には必ず`?sslmode=require`を含めてください
 - 環境変数は必ず Vercel ダッシュボードで設定してください
-- データベースの変更を行う場合は、マイグレーションファイルを作成してください
+- Neon の無料プランには制限があります（月 500MB、1GB 転送量）
+- データベーススキーマの変更時は、必ずマイグレーションファイルを作成してください
 
 詳細については、[Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) を参照してください。
