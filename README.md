@@ -2,16 +2,16 @@
 
 ![ホームページ](homepage-screenshot.png)
 
-トピック（カテゴリ）別にWebページのブックマークを整理・管理できるアプリケーションです。
+トピック（カテゴリ）別に Web ページのブックマークを整理・管理できるアプリケーションです。
 
 ## 概要
 
-このアプリケーションは、Webページのブックマークを効率的に管理するためのツールです。トピック（カテゴリ）を作成し、そのトピックに関連するブックマークを整理できます。
+このアプリケーションは、Web ページのブックマークを効率的に管理するためのツールです。トピック（カテゴリ）を作成し、そのトピックに関連するブックマークを整理できます。
 
 ### 主な機能
 
 - **トピック管理**: ブックマークを整理するためのカテゴリ（トピック）を作成・編集・削除
-- **ブックマーク管理**: URLとコメントを含むブックマークの作成・編集・削除
+- **ブックマーク管理**: URL とコメントを含むブックマークの作成・編集・削除
 - **階層的な整理**: トピックごとにブックマークを分類して管理
 - **レスポンシブデザイン**: デスクトップとモバイルデバイスの両方に対応
 
@@ -56,8 +56,52 @@ To learn more about Next.js, take a look at the following resources:
 
 You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
 
-## Deploy on Vercel
+## Vercel にデプロイする
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+このアプリケーションを Vercel にデプロイするには、以下の手順に従ってください：
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### 1. 前提条件
+
+- GitHub リポジトリにプロジェクトをプッシュしておく
+- Vercel アカウントを作成する
+
+### 2. データベースの準備
+
+現在のプロジェクトは SQLite を使用していますが、Vercel では永続化されません。本番環境では以下のいずれかを使用することをお勧めします：
+
+- **Vercel Postgres**: Vercel が提供する PostgreSQL サービス
+- **PlanetScale**: サーバーレス MySQL
+- **Supabase**: オープンソースの PostgreSQL
+
+### 3. Vercel でのデプロイ手順
+
+1. [Vercel Dashboard](https://vercel.com/dashboard)にアクセス
+2. "New Project"をクリック
+3. GitHub リポジトリを選択
+4. 環境変数を設定：
+   - `DATABASE_URL`: 本番データベースの URL
+5. "Deploy"をクリック
+
+### 4. 環境変数の設定
+
+Vercel ダッシュボードで以下の環境変数を設定してください：
+
+```
+DATABASE_URL=your-production-database-url
+```
+
+### 5. データベースの初期化
+
+本番データベースを初期化するには、Vercel ダッシュボードのプロジェクト設定から以下のコマンドを実行してください：
+
+```bash
+npx prisma db push
+```
+
+### 注意事項
+
+- 本番環境では、`prisma/schema.prisma`で SQLite から PostgreSQL に変更することを推奨します
+- 環境変数は必ず Vercel ダッシュボードで設定してください
+- データベースの変更を行う場合は、マイグレーションファイルを作成してください
+
+詳細については、[Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) を参照してください。
