@@ -59,27 +59,29 @@ export const TopicSidebar: React.FC<TopicSidebarProps> = ({
   setShowTopicModal,
 }) => {
   return (
-    <Sidebar className="border-r border-amber-200 bg-white shadow-sm">
+    <Sidebar className="border-r border-sidebar-border bg-sidebar shadow-sm">
       {/* サイドバーヘッダー */}
-      <SidebarHeader className="border-b border-amber-100 p-6 pr-0 bg-gradient-to-r from-amber-50 to-orange-50">
+      <SidebarHeader className="border-b border-sidebar-border p-6 pr-0 bg-sidebar">
         <div className="flex items-center gap-2">
-          <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-amber-500 to-orange-500 text-white">
+          <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-sidebar-primary text-sidebar-primary-foreground">
             <Bookmark className="h-4 w-4" />
           </div>
           <div>
-            <h1 className="text-lg font-semibold text-gray-900">
+            <h1 className="text-lg font-semibold text-sidebar-foreground">
               ブックマークレコード
             </h1>
-            <p className="text-xs text-gray-600">シンプルにリンクを管理！</p>
+            <p className="text-xs text-sidebar-foreground/70">
+              シンプルにリンクを管理！
+            </p>
           </div>
         </div>
       </SidebarHeader>
 
-      <SidebarContent className="bg-background">
+      <SidebarContent className="bg-sidebar">
         <SidebarGroup>
           {/* トピック一覧のヘッダー */}
           <SidebarGroupLabel className="flex items-center justify-between px-3 py-6">
-            <span className="text-sm font-semibold text-gray-700">
+            <span className="text-sm font-semibold text-sidebar-foreground">
               トピック
             </span>
             <Dialog open={showTopicModal} onOpenChange={setShowTopicModal}>
@@ -87,7 +89,7 @@ export const TopicSidebar: React.FC<TopicSidebarProps> = ({
                 <Button
                   variant="ghost"
                   size="sm"
-                  className="h-6 w-6 p-0 hover:bg-amber-100"
+                  className="h-6 w-6 p-0 hover:bg-sidebar-accent text-sidebar-foreground"
                   onClick={onTopicCreate}
                 >
                   <Plus className="h-3 w-3" />
@@ -103,10 +105,10 @@ export const TopicSidebar: React.FC<TopicSidebarProps> = ({
                 <div
                   key={topic.id}
                   onClick={() => onTopicSelect(topic.id)}
-                  className={`p-3 rounded-xl border cursor-pointer shadow-sm group ${
+                  className={`p-3 rounded-xl border cursor-pointer shadow-sm group transition-colors ${
                     selectedTopicId === topic.id
-                      ? "bg-gradient-to-r from-amber-100 to-orange-100 border-amber-300"
-                      : "bg-white border-amber-200 hover:border-amber-300 hover:shadow-md"
+                      ? "bg-sidebar-accent border-sidebar-primary text-sidebar-accent-foreground"
+                      : "bg-card border-sidebar-border hover:bg-sidebar-accent/50 hover:border-sidebar-primary text-card-foreground"
                   }`}
                 >
                   <div className="flex items-start justify-between">
@@ -115,14 +117,14 @@ export const TopicSidebar: React.FC<TopicSidebarProps> = ({
                         {topic.emoji}
                       </div>
                       <div className="flex-1 min-w-0">
-                        <h3 className="font-semibold text-gray-900 truncate text-sm">
+                        <h3 className="font-semibold truncate text-sm">
                           {topic.title}
                         </h3>
                         <div className="flex items-center justify-between mt-1">
-                          <p className="text-xs text-amber-600 font-medium">
+                          <p className="text-xs text-primary font-medium">
                             {topic.bookmarkCount} 個
                           </p>
-                          <p className="text-xs text-gray-500">
+                          <p className="text-xs text-muted-foreground">
                             {formatDate(topic.updatedAt)}
                           </p>
                         </div>
@@ -136,7 +138,7 @@ export const TopicSidebar: React.FC<TopicSidebarProps> = ({
                           e.stopPropagation();
                           onTopicEdit(topic);
                         }}
-                        className="p-1.5 text-gray-400 hover:text-amber-600 rounded-lg hover:bg-amber-50"
+                        className="p-1.5 text-muted-foreground hover:text-primary rounded-lg hover:bg-sidebar-accent"
                       >
                         <Edit className="w-3 h-3" />
                       </button>
@@ -147,12 +149,12 @@ export const TopicSidebar: React.FC<TopicSidebarProps> = ({
                               // イベントバブリングを防止してトピック選択を回避
                               e.stopPropagation();
                             }}
-                            className="p-1.5 text-gray-400 hover:text-red-500 rounded-lg hover:bg-red-50"
+                            className="p-1.5 text-muted-foreground hover:text-destructive rounded-lg hover:bg-destructive/10"
                           >
                             <Trash2 className="w-3 h-3" />
                           </button>
                         </AlertDialogTrigger>
-                        <AlertDialogContent className="rounded-2xl border border-red-200">
+                        <AlertDialogContent className="rounded-2xl border border-destructive/20">
                           <AlertDialogHeader>
                             <AlertDialogTitle>トピックを削除</AlertDialogTitle>
                             <AlertDialogDescription>
@@ -165,7 +167,7 @@ export const TopicSidebar: React.FC<TopicSidebarProps> = ({
                             </AlertDialogCancel>
                             <AlertDialogAction
                               onClick={() => onTopicDelete(topic.id)}
-                              className="bg-red-600 text-white hover:bg-red-700 rounded-xl"
+                              className="bg-destructive text-destructive-foreground hover:bg-destructive/90 rounded-xl"
                             >
                               削除
                             </AlertDialogAction>

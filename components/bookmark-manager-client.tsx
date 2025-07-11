@@ -109,7 +109,7 @@ export const BookmarkManagerClient: React.FC<BookmarkManagerClientProps> = ({
 
   return (
     <SidebarProvider>
-      <div className="flex h-screen w-full bg-amber-50 dark:bg-background">
+      <div className="flex h-screen w-full bg-background">
         {/* トピック選択サイドバー */}
         <TopicSidebar
           topics={topicsHook.topics}
@@ -124,11 +124,11 @@ export const BookmarkManagerClient: React.FC<BookmarkManagerClientProps> = ({
 
         <SidebarInset className="flex-1">
           {/* ヘッダー */}
-          <header className="flex shrink-0 items-center justify-between p-6 bg-white dark:bg-card">
+          <header className="flex shrink-0 items-center justify-between p-6 bg-card border-b border-border">
             <div className="flex items-center gap-4">
-              <SidebarTrigger className="hover:bg-amber-100 dark:hover:bg-accent rounded-lg" />
+              <SidebarTrigger className="hover:bg-accent rounded-lg" />
               <div className="min-w-0 flex-1">
-                <h2 className="text-xl font-bold text-gray-900 dark:text-foreground">
+                <h2 className="text-xl font-bold text-card-foreground">
                   {topicsHook.selectedTopic?.title || "トピックを選択"}
                 </h2>
               </div>
@@ -149,7 +149,7 @@ export const BookmarkManagerClient: React.FC<BookmarkManagerClientProps> = ({
                 >
                   <DialogTrigger asChild>
                     <Button
-                      className="bg-gradient-to-r from-amber-500 to-orange-500 hover:opacity-80 text-white rounded-xl shadow-sm"
+                      className="bg-primary hover:bg-primary/90 text-primary-foreground rounded-xl shadow-sm"
                       onClick={handleBookmarkCreate}
                     >
                       <Plus className="h-4 w-4 mr-2" />
@@ -164,9 +164,9 @@ export const BookmarkManagerClient: React.FC<BookmarkManagerClientProps> = ({
           {/* トピック説明文セクション（長い説明文の場合のみ表示） */}
           {topicsHook.selectedTopic?.description &&
             topicsHook.selectedTopic.description.length > 100 && (
-              <div className="border-b border-amber-200 dark:border-border bg-white dark:bg-card px-6 py-4">
+              <div className="border-b border-border bg-card px-6 py-4">
                 <div
-                  className={`text-gray-700 dark:text-foreground leading-relaxed ${
+                  className={`text-card-foreground leading-relaxed ${
                     !modalsHook.isDescriptionExpanded &&
                     topicsHook.selectedTopic.description.length > 100
                       ? "line-clamp-3"
@@ -183,7 +183,7 @@ export const BookmarkManagerClient: React.FC<BookmarkManagerClientProps> = ({
                     variant="ghost"
                     size="sm"
                     onClick={modalsHook.toggleDescriptionExpansion}
-                    className="mt-2 text-amber-600 hover:text-amber-700 hover:bg-amber-50 dark:text-amber-400 dark:hover:text-amber-300 dark:hover:bg-accent rounded-lg"
+                    className="mt-2 text-primary hover:text-primary/80 hover:bg-accent rounded-lg"
                   >
                     {modalsHook.isDescriptionExpanded ? (
                       <>
