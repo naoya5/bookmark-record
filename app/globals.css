@@ -25,6 +25,7 @@
   --color-input: var(--input);
   --color-border: var(--border);
   --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
   --color-accent-foreground: var(--accent-foreground);
   --color-accent: var(--accent);
   --color-muted-foreground: var(--muted-foreground);
@@ -45,71 +46,116 @@
 
 :root {
   --radius: 0.625rem;
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.145 0 0);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.145 0 0);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.145 0 0);
-  --primary: oklch(0.205 0 0);
-  --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.97 0 0);
-  --secondary-foreground: oklch(0.205 0 0);
-  --muted: oklch(0.97 0 0);
-  --muted-foreground: oklch(0.556 0 0);
-  --accent: oklch(0.97 0 0);
-  --accent-foreground: oklch(0.205 0 0);
-  --destructive: oklch(0.577 0.245 27.325);
-  --border: oklch(0.922 0 0);
-  --input: oklch(0.922 0 0);
-  --ring: oklch(0.708 0 0);
-  --chart-1: oklch(0.646 0.222 41.116);
-  --chart-2: oklch(0.6 0.118 184.704);
-  --chart-3: oklch(0.398 0.07 227.392);
-  --chart-4: oklch(0.828 0.189 84.429);
-  --chart-5: oklch(0.769 0.188 70.08);
-  --sidebar: oklch(0.985 0 0);
-  --sidebar-foreground: oklch(0.145 0 0);
-  --sidebar-primary: oklch(0.205 0 0);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.97 0 0);
-  --sidebar-accent-foreground: oklch(0.205 0 0);
-  --sidebar-border: oklch(0.922 0 0);
-  --sidebar-ring: oklch(0.708 0 0);
+
+  /* ライトテーマ - 暖かいアンバーベースのカラーパレット */
+  --background: oklch(99% 0.01 85); /* 極薄いアンバーの白 */
+  --foreground: oklch(15% 0.02 65); /* 濃いブラウン */
+  --card: oklch(98% 0.015 80); /* アンバーがかった白いカード */
+  --card-foreground: oklch(15% 0.02 65); /* カード上のテキスト */
+  --popover: oklch(98% 0.015 80); /* ポップオーバー背景 */
+  --popover-foreground: oklch(15% 0.02 65); /* ポップオーバーテキスト */
+
+  /* プライマリ - 美しいアンバーグラデーション */
+  --primary: oklch(65% 0.15 75); /* リッチなアンバー */
+  --primary-foreground: oklch(98% 0.01 80); /* プライマリ上の白いテキスト */
+
+  /* セカンダリ - 柔らかいアンバー系 */
+  --secondary: oklch(94% 0.03 78); /* 薄いアンバー */
+  --secondary-foreground: oklch(25% 0.03 70); /* セカンダリ上のテキスト */
+
+  /* ミュート - 落ち着いたトーン */
+  --muted: oklch(96% 0.02 75); /* ソフトなアンバー */
+  --muted-foreground: oklch(45% 0.04 68); /* ミュートテキスト */
+
+  /* アクセント - ホバー時の美しい強調 */
+  --accent: oklch(92% 0.04 76); /* アクセント背景 */
+  --accent-foreground: oklch(20% 0.03 68); /* アクセントテキスト */
+
+  /* 破壊的アクション - 暖かいレッド */
+  --destructive: oklch(58% 0.24 28); /* 温かみのある赤 */
+  --destructive-foreground: oklch(98% 0.01 80); /* 破壊的アクション上の白 */
+
+  /* ボーダーとインプット - 統一感のある境界線 */
+  --border: oklch(88% 0.03 78); /* 柔らかいアンバーボーダー */
+  --input: oklch(88% 0.03 78); /* インプットボーダー */
+  --ring: oklch(65% 0.15 75); /* フォーカスリング（プライマリと同じ） */
+
+  /* チャート色 - アンバー系統のデータビジュアライゼーション */
+  --chart-1: oklch(68% 0.18 65); /* ディープアンバー */
+  --chart-2: oklch(62% 0.12 95); /* オレンジ */
+  --chart-3: oklch(58% 0.08 125); /* ゴールデンイエロー */
+  --chart-4: oklch(55% 0.16 45); /* バーントオレンジ */
+  --chart-5: oklch(72% 0.14 85); /* ライトアンバー */
+
+  /* サイドバー - アンバーテーマ統合 */
+  --sidebar: oklch(97% 0.02 78); /* サイドバー背景 */
+  --sidebar-foreground: oklch(18% 0.02 65); /* サイドバーテキスト */
+  --sidebar-primary: oklch(65% 0.15 75); /* サイドバープライマリ */
+  --sidebar-primary-foreground: oklch(
+    98% 0.01 80
+  ); /* サイドバープライマリテキスト */
+  --sidebar-accent: oklch(92% 0.04 76); /* サイドバーアクセント */
+  --sidebar-accent-foreground: oklch(
+    20% 0.03 68
+  ); /* サイドバーアクセントテキスト */
+  --sidebar-border: oklch(88% 0.03 78); /* サイドバーボーダー */
+  --sidebar-ring: oklch(65% 0.15 75); /* サイドバーフォーカスリング */
 }
 
 .dark {
-  --background: oklch(0.145 0 0);
-  --foreground: oklch(0.985 0 0);
-  --card: oklch(0.205 0 0);
-  --card-foreground: oklch(0.985 0 0);
-  --popover: oklch(0.205 0 0);
-  --popover-foreground: oklch(0.985 0 0);
-  --primary: oklch(0.922 0 0);
-  --primary-foreground: oklch(0.205 0 0);
-  --secondary: oklch(0.269 0 0);
-  --secondary-foreground: oklch(0.985 0 0);
-  --muted: oklch(0.269 0 0);
-  --muted-foreground: oklch(0.708 0 0);
-  --accent: oklch(0.269 0 0);
-  --accent-foreground: oklch(0.985 0 0);
-  --destructive: oklch(0.704 0.191 22.216);
-  --border: oklch(1 0 0 / 10%);
-  --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.556 0 0);
-  --chart-1: oklch(0.488 0.243 264.376);
-  --chart-2: oklch(0.696 0.17 162.48);
-  --chart-3: oklch(0.769 0.188 70.08);
-  --chart-4: oklch(0.627 0.265 303.9);
-  --chart-5: oklch(0.645 0.246 16.439);
-  --sidebar: oklch(0.205 0 0);
-  --sidebar-foreground: oklch(0.985 0 0);
-  --sidebar-primary: oklch(0.488 0.243 264.376);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.269 0 0);
-  --sidebar-accent-foreground: oklch(0.985 0 0);
-  --sidebar-border: oklch(1 0 0 / 10%);
-  --sidebar-ring: oklch(0.556 0 0);
+  /* ダークテーマ - アンバーアクセント付きエレガントダーク */
+  --background: oklch(12% 0.02 65); /* ディープダークブラウン */
+  --foreground: oklch(92% 0.02 78); /* 暖かい白 */
+  --card: oklch(16% 0.025 68); /* ダークカード */
+  --card-foreground: oklch(92% 0.02 78); /* カードテキスト */
+  --popover: oklch(16% 0.025 68); /* ダークポップオーバー */
+  --popover-foreground: oklch(92% 0.02 78); /* ポップオーバーテキスト */
+
+  /* プライマリ - ダークモードでも美しいアンバー */
+  --primary: oklch(72% 0.16 76); /* ブライトアンバー */
+  --primary-foreground: oklch(15% 0.02 65); /* プライマリ上のダークテキスト */
+
+  /* セカンダリ - ダークアンバー */
+  --secondary: oklch(22% 0.03 68); /* ダークセカンダリ */
+  --secondary-foreground: oklch(88% 0.02 78); /* セカンダリテキスト */
+
+  /* ミュート - ダークミュート */
+  --muted: oklch(20% 0.025 68); /* ダークミュート */
+  --muted-foreground: oklch(65% 0.04 75); /* ミュートテキスト */
+
+  /* アクセント - ダークアクセント */
+  --accent: oklch(24% 0.03 70); /* ダークアクセント */
+  --accent-foreground: oklch(88% 0.02 78); /* アクセントテキスト */
+
+  /* 破壊的アクション - ダークモード対応 */
+  --destructive: oklch(65% 0.22 28); /* ブライト破壊色 */
+  --destructive-foreground: oklch(95% 0.01 80); /* 破壊的テキスト */
+
+  /* ボーダーとインプット - ダークモード */
+  --border: oklch(28% 0.03 68); /* ダークボーダー */
+  --input: oklch(32% 0.03 70); /* ダークインプット */
+  --ring: oklch(72% 0.16 76); /* ブライトフォーカスリング */
+
+  /* チャート色 - ダークモード対応 */
+  --chart-1: oklch(75% 0.18 65); /* ブライトアンバー */
+  --chart-2: oklch(68% 0.15 95); /* ブライトオレンジ */
+  --chart-3: oklch(78% 0.12 125); /* ブライトゴールド */
+  --chart-4: oklch(62% 0.18 45); /* ブライトバーントオレンジ */
+  --chart-5: oklch(82% 0.14 85); /* ブライトライトアンバー */
+
+  /* サイドバー - ダークモード */
+  --sidebar: oklch(14% 0.02 65); /* ダークサイドバー */
+  --sidebar-foreground: oklch(88% 0.02 78); /* サイドバーテキスト */
+  --sidebar-primary: oklch(72% 0.16 76); /* ブライトサイドバープライマリ */
+  --sidebar-primary-foreground: oklch(
+    15% 0.02 65
+  ); /* サイドバープライマリテキスト */
+  --sidebar-accent: oklch(24% 0.03 70); /* ダークサイドバーアクセント */
+  --sidebar-accent-foreground: oklch(
+    88% 0.02 78
+  ); /* サイドバーアクセントテキスト */
+  --sidebar-border: oklch(28% 0.03 68); /* ダークサイドバーボーダー */
+  --sidebar-ring: oklch(72% 0.16 76); /* ブライトサイドバーリング */
 }
 
 @layer base {
@@ -118,5 +164,37 @@
   }
   body {
     @apply bg-background text-foreground;
+    /* アンバーテーマに合う滑らかなトランジション */
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+
+  /* カスタムスクロールバー - アンバーテーマ */
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    @apply bg-muted rounded-lg;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    @apply bg-border rounded-lg;
+    background: linear-gradient(45deg, oklch(65% 0.15 75), oklch(72% 0.16 76));
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(45deg, oklch(60% 0.17 73), oklch(68% 0.18 74));
+  }
+
+  /* 選択テキストのスタイリング */
+  ::selection {
+    background: oklch(65% 0.15 75 / 0.3);
+    color: oklch(15% 0.02 65);
+  }
+
+  .dark ::selection {
+    background: oklch(72% 0.16 76 / 0.4);
+    color: oklch(92% 0.02 78);
   }
 }
