@@ -26,6 +26,7 @@ import { BookmarkGrid } from "./bookmark-grid";
 import { TopicModal } from "./modals/topic-modal";
 import { BookmarkModal } from "./modals/bookmark-modal";
 import { ModeToggle } from "./ui/mode-toggle";
+import { ColorThemeToggle } from "./ui/color-theme-toggle";
 
 /**
  * BookmarkManagerClientコンポーネントのプロパティ
@@ -135,6 +136,8 @@ export const BookmarkManagerClient: React.FC<BookmarkManagerClientProps> = ({
 
             {/* 操作ボタンエリア */}
             <div className="flex items-center gap-3">
+              {/* カラーテーマトグル */}
+              <ColorThemeToggle />
               {/* ダークモードトグル */}
               <ModeToggle />
 
