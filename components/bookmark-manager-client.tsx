@@ -25,6 +25,7 @@ import { TopicSidebar } from "./topic-sidebar";
 import { BookmarkGrid } from "./bookmark-grid";
 import { TopicModal } from "./modals/topic-modal";
 import { BookmarkModal } from "./modals/bookmark-modal";
+import { AiQuestionModal } from "./modals/ai-question-modal";
 
 /**
  * BookmarkManagerClientコンポーネントのプロパティ
@@ -43,6 +44,10 @@ export const BookmarkManagerClient: React.FC<BookmarkManagerClientProps> = ({
     topicsHook.mutateTopics
   );
   const modalsHook = useModals(topicsHook.selectedTopicId);
+
+  // AI質問モーダルの状態管理
+  const [showAiModal, setShowAiModal] = React.useState(false);
+  const [selectedBookmark, setSelectedBookmark] = React.useState<BookmarkType | null>(null);
 
   /**
    * トピックモーダルの送信処理
@@ -103,6 +108,17 @@ export const BookmarkManagerClient: React.FC<BookmarkManagerClientProps> = ({
   const handleBookmarkModalClose = () => {
     modalsHook.closeBookmarkModal();
     bookmarksHook.resetBookmarkForm();
+  };
+
+  // AI質問ハンドラー
+  const handleAiQuestion = (bookmark: BookmarkType) => {
+    setSelectedBookmark(bookmark);
+    setShowAiModal(true);
+  };
+
+  const handleAiModalClose = () => {
+    setShowAiModal(false);
+    setSelectedBookmark(null);
   };
 
   return (
@@ -202,6 +218,7 @@ export const BookmarkManagerClient: React.FC<BookmarkManagerClientProps> = ({
               onBookmarkEdit={handleBookmarkEdit}
               onBookmarkDelete={bookmarksHook.handleDeleteBookmark}
               onBookmarkCreate={handleBookmarkCreate}
+              onAiQuestion={handleAiQuestion}
               showBookmarkModal={modalsHook.showBookmarkModal}
               setShowBookmarkModal={modalsHook.setShowBookmarkModal}
             />
@@ -227,6 +244,12 @@ export const BookmarkManagerClient: React.FC<BookmarkManagerClientProps> = ({
         bookmarkForm={bookmarksHook.bookmarkForm}
         setBookmarkForm={bookmarksHook.setBookmarkForm}
         onSubmit={handleBookmarkModalSubmit}
+      />
+
+      <AiQuestionModal
+        isOpen={showAiModal}
+        onClose={handleAiModalClose}
+        bookmark={selectedBookmark}
       />
     </SidebarProvider>
   );
