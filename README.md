@@ -14,6 +14,7 @@
 - **ブックマーク管理**: URL とコメントを含むブックマークの作成・編集・削除
 - **階層的な整理**: トピックごとにブックマークを分類して管理
 - **レスポンシブデザイン**: デスクトップとモバイルデバイスの両方に対応
+- **AI質問機能**: ブックマークしたWebページの内容についてAIに質問できる機能
 
 ### 使用技術
 
@@ -21,7 +22,8 @@
 - **スタイリング**: Tailwind CSS, Radix UI
 - **データベース**: SQLite（Prisma ORM）
 - **状態管理**: SWR
-- **その他**: Lucide React（アイコン）、date-fns（日付処理）
+- **AI**: OpenAI API（GPT-3.5-turbo）
+- **その他**: Lucide React（アイコン）、date-fns（日付処理）、Cheerio（Webスクレイピング）
 
 ## 技術仕様
 
@@ -29,7 +31,26 @@
 
 ## Getting Started
 
-First, run the development server:
+First, install dependencies:
+
+```bash
+npm install
+```
+
+Create a `.env.local` file:
+
+```bash
+cp .env.example .env.local
+```
+
+Update the environment variables:
+
+```
+DATABASE_URL="postgresql://user:password@localhost:5432/bookmark_record"
+OPENAI_API_KEY="your-openai-api-key"
+```
+
+Run the development server:
 
 ```bash
 npm run dev
@@ -89,6 +110,7 @@ Vercel ダッシュボードで以下の環境変数を設定してください�
 
 ```
 DATABASE_URL=your-neon-database-url
+OPENAI_API_KEY=your-openai-api-key
 ```
 
 Neon の DATABASE_URL は以下の形式です：
@@ -96,6 +118,8 @@ Neon の DATABASE_URL は以下の形式です：
 ```
 postgresql://username:password@host/database?sslmode=require
 ```
+
+OpenAI API キーは [OpenAI Platform](https://platform.openai.com/api-keys) から取得できます。
 
 ### 5. データベースの初期化
 

@@ -17,6 +17,7 @@ import {
   Plus,
   Bookmark,
   Folder,
+  MessageSquare,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
@@ -41,6 +42,12 @@ import { Dialog, DialogTrigger } from "@/components/ui/dialog";
 import { Bookmark as BookmarkType } from "@/lib/generated/prisma/client";
 import { TopicWithBookmarkCount } from "@/hooks/use-topics";
 import { extractDomain, getFaviconUrl } from "@/lib/utils/url";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 
 /**
  * BookmarkGridコンポーネントのプロパティ
@@ -52,6 +59,7 @@ interface BookmarkGridProps {
   onBookmarkEdit: (bookmark: BookmarkType) => void;
   onBookmarkDelete: (bookmarkId: string) => void;
   onBookmarkCreate: () => void;
+  onAiQuestion?: (bookmark: BookmarkType) => void;
   showBookmarkModal: boolean;
   setShowBookmarkModal: (show: boolean) => void;
 }
@@ -63,6 +71,7 @@ export const BookmarkGrid: React.FC<BookmarkGridProps> = ({
   onBookmarkEdit,
   onBookmarkDelete,
   onBookmarkCreate,
+  onAiQuestion,
   showBookmarkModal,
   setShowBookmarkModal,
 }) => {
@@ -179,44 +188,77 @@ export const BookmarkGrid: React.FC<BookmarkGridProps> = ({
               </div>
               {/* ホバー時に表示される操作ボタン */}
               <div className="flex opacity-0 group-hover:opacity-100 transition-opacity">
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  className="h-8 w-8 p-0 hover:bg-amber-50"
-                  onClick={() => onBookmarkEdit(bookmark)}
-                >
-                  <Edit className="h-3 w-3" />
-                </Button>
-                <AlertDialog>
-                  <AlertDialogTrigger asChild>
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      className="h-8 w-8 p-0 text-red-500 hover:text-red-600 hover:bg-red-50"
-                    >
-                      <Trash2 className="h-3 w-3" />
-                    </Button>
-                  </AlertDialogTrigger>
-                  <AlertDialogContent className="rounded-2xl border border-red-200">
-                    <AlertDialogHeader>
-                      <AlertDialogTitle>ブックマークを削除</AlertDialogTitle>
-                      <AlertDialogDescription>
-                        このブックマークを削除してもよろしいですか？
-                      </AlertDialogDescription>
-                    </AlertDialogHeader>
-                    <AlertDialogFooter>
-                      <AlertDialogCancel className="rounded-xl">
-                        キャンセル
-                      </AlertDialogCancel>
-                      <AlertDialogAction
-                        onClick={() => onBookmarkDelete(bookmark.id)}
-                        className="bg-red-600 text-white hover:bg-red-700 rounded-xl"
+                <TooltipProvider>
+                  {onAiQuestion && (
+                    <Tooltip>
+                      <TooltipTrigger asChild>
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          className="h-8 w-8 p-0 hover:bg-amber-50"
+                          onClick={() => onAiQuestion(bookmark)}
+                        >
+                          <MessageSquare className="h-3 w-3" />
+                        </Button>
+                      </TooltipTrigger>
+                      <TooltipContent>
+                        <p>AIに質問</p>
+                      </TooltipContent>
+                    </Tooltip>
+                  )}
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        className="h-8 w-8 p-0 hover:bg-amber-50"
+                        onClick={() => onBookmarkEdit(bookmark)}
                       >
-                        削除
-                      </AlertDialogAction>
-                    </AlertDialogFooter>
-                  </AlertDialogContent>
-                </AlertDialog>
+                        <Edit className="h-3 w-3" />
+                      </Button>
+                    </TooltipTrigger>
+                    <TooltipContent>
+                      <p>編集</p>
+                    </TooltipContent>
+                  </Tooltip>
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <AlertDialog>
+                        <AlertDialogTrigger asChild>
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            className="h-8 w-8 p-0 text-red-500 hover:text-red-600 hover:bg-red-50"
+                          >
+                            <Trash2 className="h-3 w-3" />
+                          </Button>
+                        </AlertDialogTrigger>
+                        <AlertDialogContent className="rounded-2xl border border-red-200">
+                          <AlertDialogHeader>
+                            <AlertDialogTitle>ブックマークを削除</AlertDialogTitle>
+                            <AlertDialogDescription>
+                              このブックマークを削除してもよろしいですか？
+                            </AlertDialogDescription>
+                          </AlertDialogHeader>
+                          <AlertDialogFooter>
+                            <AlertDialogCancel className="rounded-xl">
+                              キャンセル
+                            </AlertDialogCancel>
+                            <AlertDialogAction
+                              onClick={() => onBookmarkDelete(bookmark.id)}
+                              className="bg-red-600 text-white hover:bg-red-700 rounded-xl"
+                            >
+                              削除
+                            </AlertDialogAction>
+                          </AlertDialogFooter>
+                        </AlertDialogContent>
+                      </AlertDialog>
+                    </TooltipTrigger>
+                    <TooltipContent>
+                      <p>削除</p>
+                    </TooltipContent>
+                  </Tooltip>
+                </TooltipProvider>
               </div>
             </div>
           </CardHeader>
