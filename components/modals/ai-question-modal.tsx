@@ -17,7 +17,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { Bookmark as BookmarkType } from "@/lib/generated/prisma/client";
+import { Bookmark as BookmarkType } from "@prisma/client";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 
 /**

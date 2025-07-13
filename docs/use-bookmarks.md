@@ -94,5 +94,5 @@ const BookmarksComponent = ({ topicId }) => {
 Prismaによって生成される `Bookmark` 型です。
 
 ```typescript
-import { Bookmark as BookmarkType } from "@/lib/generated/prisma";
+import { Bookmark as BookmarkType } from "@prisma/client";
 ```

@@ -102,7 +102,7 @@ const TopicsComponent = () => {
 APIから返される、ブックマーク数を含む拡張された `Topic` 型です。
 
 ```typescript
-import { Topic } from "@/lib/generated/prisma";
+import { Topic } from "@prisma/client";
 
 export interface TopicWithBookmarkCount extends Topic {
   bookmarkCount: number;

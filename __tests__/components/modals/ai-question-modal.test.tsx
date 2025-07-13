@@ -1,6 +1,6 @@
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import { AiQuestionModal } from '@/components/modals/ai-question-modal';
-import { Bookmark as BookmarkType } from '@/lib/generated/prisma/client';
+import { Bookmark as BookmarkType } from '@prisma/client';
 
 // fetchのモック
 global.fetch = jest.fn();

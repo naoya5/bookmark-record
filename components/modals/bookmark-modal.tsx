@@ -26,7 +26,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Bookmark as BookmarkType } from "@/lib/generated/prisma/client";
+import { Bookmark as BookmarkType } from "@prisma/client";
 import { TopicWithBookmarkCount } from "@/hooks/use-topics";
 import { isValidUrl } from "@/lib/utils/url";
 

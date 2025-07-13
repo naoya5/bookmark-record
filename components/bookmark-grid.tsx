@@ -39,7 +39,7 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { Dialog, DialogTrigger } from "@/components/ui/dialog";
-import { Bookmark as BookmarkType } from "@/lib/generated/prisma/client";
+import { Bookmark as BookmarkType } from "@prisma/client";
 import { TopicWithBookmarkCount } from "@/hooks/use-topics";
 import { extractDomain, getFaviconUrl } from "@/lib/utils/url";
 import {

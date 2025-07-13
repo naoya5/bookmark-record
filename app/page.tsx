@@ -1,7 +1,7 @@
 import { prisma } from "@/lib/prisma";
 import { BookmarkManagerClient } from "@/components/bookmark-manager-client";
 import { TopicWithBookmarkCount } from "@/hooks/use-topics";
-import { Topic } from "@/lib/generated/prisma/client";
+import { Topic } from "@prisma/client";
 
 /**
  * 初期表示用のトピック一覧を取得する

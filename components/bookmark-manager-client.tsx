@@ -20,7 +20,7 @@ import {
 import { useTopics, TopicWithBookmarkCount } from "@/hooks/use-topics";
 import { useBookmarks } from "@/hooks/use-bookmarks";
 import { useModals } from "@/hooks/use-modal";
-import { Bookmark as BookmarkType } from "@/lib/generated/prisma/client";
+import { Bookmark as BookmarkType } from "@prisma/client";
 import { TopicSidebar } from "./topic-sidebar";
 import { BookmarkGrid } from "./bookmark-grid";
 import { TopicModal } from "./modals/topic-modal";

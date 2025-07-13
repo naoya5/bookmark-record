@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import useSWR from "swr";
-import { Bookmark as BookmarkType } from "@/lib/generated/prisma";
+import { Bookmark as BookmarkType } from "@prisma/client";
 
 //fetcher関数を定義
 const fetcher = (url: string) => fetch(url).then((res) => res.json());

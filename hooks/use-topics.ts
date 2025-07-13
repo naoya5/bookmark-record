@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import useSWR from "swr";
-import { Topic } from "@/lib/generated/prisma";
+import { Topic } from "@prisma/client";
 
 // APIから返される拡張されたTopic型（ブックマーク数を含む）
 export interface TopicWithBookmarkCount extends Topic {
