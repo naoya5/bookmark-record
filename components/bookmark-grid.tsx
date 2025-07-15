@@ -7,7 +7,7 @@
  * グリッドレイアウトで表示し、編集・削除機能を提供します。
  */
 
-import React from "react";
+import React, { useState } from "react";
 import Image from "next/image";
 import {
   Edit,
@@ -48,6 +48,13 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import { BookmarkPreview } from "@/components/bookmark-preview";
+import { usePreview } from "@/hooks/use-preview";
 
 /**
  * BookmarkGridコンポーネントのプロパティ
@@ -133,9 +140,64 @@ export const BookmarkGrid: React.FC<BookmarkGridProps> = ({
   return (
     <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
       {bookmarks.map((bookmark) => (
-        <Card
+        <BookmarkCard
           key={bookmark.id}
-          className="group hover:shadow-lg transition-all border-amber-200 hover:border-amber-300 rounded-xl"
+          bookmark={bookmark}
+          onBookmarkEdit={onBookmarkEdit}
+          onBookmarkDelete={onBookmarkDelete}
+          onAiQuestion={onAiQuestion}
+        />
+      ))}
+    </div>
+  );
+};
+
+/**
+ * プレビュー機能付きブックマークカードコンポーネント
+ */
+interface BookmarkCardProps {
+  bookmark: BookmarkType;
+  onBookmarkEdit: (bookmark: BookmarkType) => void;
+  onBookmarkDelete: (bookmarkId: string) => void;
+  onAiQuestion?: (bookmark: BookmarkType) => void;
+}
+
+const BookmarkCard: React.FC<BookmarkCardProps> = ({
+  bookmark,
+  onBookmarkEdit,
+  onBookmarkDelete,
+  onAiQuestion,
+}) => {
+  const [isHovered, setIsHovered] = useState(false);
+  const [showPreview, setShowPreview] = useState(false);
+  const { prefetchPreview } = usePreview(bookmark.url);
+  const domain = extractDomain(bookmark.url);
+
+  // ホバー開始時の処理
+  const handleMouseEnter = () => {
+    setIsHovered(true);
+    // 少し遅延してからプレビューを表示（誤操作防止）
+    setTimeout(() => {
+      if (isHovered) {
+        setShowPreview(true);
+        prefetchPreview(); // プレビューデータを事前取得
+      }
+    }, 500);
+  };
+
+  // ホバー終了時の処理
+  const handleMouseLeave = () => {
+    setIsHovered(false);
+    setShowPreview(false);
+  };
+
+  return (
+    <Popover open={showPreview && isHovered} onOpenChange={setShowPreview}>
+      <PopoverTrigger asChild>
+        <Card
+          className="group hover:shadow-lg transition-all border-amber-200 hover:border-amber-300 rounded-xl cursor-pointer"
+          onMouseEnter={handleMouseEnter}
+          onMouseLeave={handleMouseLeave}
         >
           <CardHeader className="pb-3">
             <div className="flex items-start justify-between">
@@ -179,8 +241,9 @@ export const BookmarkGrid: React.FC<BookmarkGridProps> = ({
                       target="_blank"
                       rel="noopener noreferrer"
                       className="text-amber-700 hover:text-amber-800 font-semibold transition-colors flex items-center gap-1"
+                      onClick={(e) => e.stopPropagation()} // プレビューとの干渉を防ぐ
                     >
-                      {extractDomain(bookmark.url)}
+                      {domain}
                       <ExternalLink className="w-3 h-3 opacity-50" />
                     </a>
                   </CardTitle>
@@ -196,7 +259,10 @@ export const BookmarkGrid: React.FC<BookmarkGridProps> = ({
                           variant="ghost"
                           size="sm"
                           className="h-8 w-8 p-0 hover:bg-amber-50"
-                          onClick={() => onAiQuestion(bookmark)}
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            onAiQuestion(bookmark);
+                          }}
                         >
                           <MessageSquare className="h-3 w-3" />
                         </Button>
@@ -212,7 +278,10 @@ export const BookmarkGrid: React.FC<BookmarkGridProps> = ({
                         variant="ghost"
                         size="sm"
                         className="h-8 w-8 p-0 hover:bg-amber-50"
-                        onClick={() => onBookmarkEdit(bookmark)}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          onBookmarkEdit(bookmark);
+                        }}
                       >
                         <Edit className="h-3 w-3" />
                       </Button>
@@ -229,6 +298,7 @@ export const BookmarkGrid: React.FC<BookmarkGridProps> = ({
                             variant="ghost"
                             size="sm"
                             className="h-8 w-8 p-0 text-red-500 hover:text-red-600 hover:bg-red-50"
+                            onClick={(e) => e.stopPropagation()}
                           >
                             <Trash2 className="h-3 w-3" />
                           </Button>
@@ -271,7 +341,15 @@ export const BookmarkGrid: React.FC<BookmarkGridProps> = ({
             </p>
           </CardContent>
         </Card>
-      ))}
-    </div>
+      </PopoverTrigger>
+      <PopoverContent 
+        side="top" 
+        align="start" 
+        className="p-0 border-0 shadow-2xl"
+        sideOffset={8}
+      >
+        <BookmarkPreview url={bookmark.url} domain={domain} />
+      </PopoverContent>
+    </Popover>
   );
 };
