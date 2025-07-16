@@ -159,3 +159,83 @@
   }
   ```
 - **レスポンス (404 Not Found):** ブックマークが存在しない場合。
+
+---
+
+## プレビュー API
+
+ベースパス: `/api/bookmarks/preview`
+
+### GET /api/bookmarks/preview
+
+- **説明:** 指定されたURLのメタデータ（タイトル、説明、画像など）を取得してプレビュー表示用の情報を提供します。
+- **クエリパラメータ:**
+  - `url` (string, 必須): プレビューを取得したいURL。
+- **レスポンス (200 OK):** URLのメタデータオブジェクト。
+  ```json
+  {
+    "title": "string",
+    "description": "string",
+    "image": "string",
+    "siteName": "string",
+    "url": "string"
+  }
+  ```
+- **レスポンス (400 Bad Request):** URLパラメータが不正または欠落している場合。
+  ```json
+  {
+    "error": "URLパラメータが必要です"
+  }
+  ```
+- **レスポンス (500 Internal Server Error):** サーバーエラーが発生した場合。
+
+---
+
+## AI分析 API
+
+ベースパス: `/api/ai/analyze-url`
+
+### POST /api/ai/analyze-url
+
+- **説明:** URLの内容をAIで分析し、ユーザーの質問に基づいて回答を生成します。OpenAI GPT-3.5-turboを使用します。
+- **リクエストボディ:**
+  ```json
+  {
+    "url": "string",
+    "question": "string"
+  }
+  ```
+- **レスポンス (200 OK):** AI分析結果オブジェクト。
+  ```json
+  {
+    "answer": "string",
+    "urlContent": "string"
+  }
+  ```
+- **レスポンス (400 Bad Request):** リクエストパラメータが不正または欠落している場合。
+  ```json
+  {
+    "error": "URLと質問は必須です"
+  }
+  ```
+- **レスポンス (500 Internal Server Error):** OpenAI APIキーが未設定またはサーバーエラーが発生した場合。
+  ```json
+  {
+    "error": "OpenAI APIキーが設定されていません。.env.localファイルにOPENAI_API_KEYを設定してください。",
+    "details": "OpenAI APIキーは https://platform.openai.com/api-keys から取得できます。"
+  }
+  ```
+
+## 環境設定
+
+### 必要な環境変数
+
+```env
+# OpenAI APIキー（AI分析機能で使用）
+OPENAI_API_KEY=your_openai_api_key_here
+```
+
+### 依存関係
+
+- `cheerio`: HTMLパースとメタデータ抽出
+- `openai`: OpenAI API クライアント

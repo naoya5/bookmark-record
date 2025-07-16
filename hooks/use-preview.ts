@@ -8,28 +8,34 @@ export interface PreviewData {
   image: string;
   siteName: string;
   url: string;
+  author?: string;
+  publishedAt?: string;
+  tags?: string[];
 }
 
 // fetcher関数を定義
-const fetcher = (url: string) => fetch(url).then((res) => {
-  if (!res.ok) {
-    throw new Error(`HTTP error! status: ${res.status}`);
-  }
-  return res.json();
-});
+const fetcher = (url: string) =>
+  fetch(url).then((res) => {
+    if (!res.ok) {
+      throw new Error(`HTTP error! status: ${res.status}`);
+    }
+    return res.json();
+  });
 
 /**
  * プレビュー機能を提供するカスタムフック
- * 
+ *
  * URLのメタデータを取得し、プレビュー表示に必要な情報を提供します。
  * SWRを使用してデータのキャッシュと自動再取得を行います。
  */
 export const usePreview = (url: string | null) => {
   const [shouldFetch, setShouldFetch] = useState(false);
-  
+
   // SWRを使用してプレビューデータを取得・キャッシュ
   const { data, error, mutate } = useSWR<PreviewData>(
-    shouldFetch && url ? `/api/bookmarks/preview?url=${encodeURIComponent(url)}` : null,
+    shouldFetch && url
+      ? `/api/bookmarks/preview?url=${encodeURIComponent(url)}`
+      : null,
     fetcher,
     {
       // プレビューデータは頻繁に変更されないため、キャッシュ時間を長めに設定
