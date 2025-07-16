@@ -63,6 +63,23 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: "Title is required" }, { status: 400 });
     }
 
+    // タイトルの重複チェック
+    const existingTopic = await prisma.topic.findFirst({
+      where: {
+        title: {
+          equals: title,
+          mode: "insensitive",
+        },
+      },
+    });
+
+    if (existingTopic) {
+      return NextResponse.json(
+        { error: "Topic with this title already exists" },
+        { status: 409 }
+      );
+    }
+
     // トピックを作成
     const topic = await prisma.topic.create({
       data: {

@@ -46,6 +46,8 @@ interface TopicSidebarProps {
   onTopicCreate: () => void;
   showTopicModal: boolean;
   setShowTopicModal: (show: boolean) => void;
+  isCreating?: boolean;
+  isDeleting?: boolean;
 }
 
 export const TopicSidebar: React.FC<TopicSidebarProps> = ({
@@ -57,6 +59,8 @@ export const TopicSidebar: React.FC<TopicSidebarProps> = ({
   onTopicCreate,
   showTopicModal,
   setShowTopicModal,
+  isCreating = false,
+  isDeleting = false,
 }) => {
   return (
     <Sidebar className="border-r border-sidebar-border bg-sidebar shadow-sm">
@@ -89,8 +93,9 @@ export const TopicSidebar: React.FC<TopicSidebarProps> = ({
                 <Button
                   variant="ghost"
                   size="sm"
-                  className="h-6 w-6 p-0 hover:bg-sidebar-accent text-sidebar-foreground"
+                  className="h-6 w-6 p-0 hover:bg-sidebar-accent text-sidebar-foreground disabled:opacity-50"
                   onClick={onTopicCreate}
+                  disabled={isCreating}
                 >
                   <Plus className="h-3 w-3" />
                 </Button>
@@ -149,7 +154,8 @@ export const TopicSidebar: React.FC<TopicSidebarProps> = ({
                               // イベントバブリングを防止してトピック選択を回避
                               e.stopPropagation();
                             }}
-                            className="p-1.5 text-muted-foreground hover:text-destructive rounded-lg hover:bg-destructive/10"
+                            className="p-1.5 text-muted-foreground hover:text-destructive rounded-lg hover:bg-destructive/10 disabled:opacity-50"
+                            disabled={isDeleting}
                           >
                             <Trash2 className="w-3 h-3" />
                           </button>
