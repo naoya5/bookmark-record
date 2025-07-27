@@ -32,6 +32,9 @@ export const useTopics = (initialTopics: TopicWithBookmarkCount[] = []) => {
     title: "",
     description: "",
   });
+  const [isCreating, setIsCreating] = useState(false);
+  const [isUpdating, setIsUpdating] = useState(false);
+  const [isDeleting, setIsDeleting] = useState(false);
 
   // SWRデータが利用可能な場合はそれを使用、そうでなければ初期データを使用
   const currentTopics = data && data.length > 0 ? data : initialTopics;
@@ -66,6 +69,9 @@ export const useTopics = (initialTopics: TopicWithBookmarkCount[] = []) => {
 
   //トピックの作成
   const handleCreateTopic = async () => {
+    if (isCreating) return false; // 既に作成中の場合は重複実行を防止
+    
+    setIsCreating(true);
     try {
       const response = await fetch("/api/topics", {
         method: "POST",
@@ -89,17 +95,27 @@ export const useTopics = (initialTopics: TopicWithBookmarkCount[] = []) => {
         }
         return true;
       }
+      
+      // エラーレスポンスを処理
+      if (response.status === 409) {
+        const errorData = await response.json();
+        console.error("Topic already exists:", errorData.error);
+        alert("同じタイトルのトピックが既に存在します");
+      }
       return false;
     } catch (error) {
       console.error("Error creating topic:", error);
       return false;
+    } finally {
+      setIsCreating(false);
     }
   };
 
   //トピックの更新
   const handleUpdateTopic = async () => {
-    if (!editingTopic) return false;
+    if (!editingTopic || isUpdating) return false;
 
+    setIsUpdating(true);
     try {
       const response = await fetch(`/api/topics/${editingTopic.id}`, {
         method: "PUT",
@@ -118,15 +134,27 @@ export const useTopics = (initialTopics: TopicWithBookmarkCount[] = []) => {
         resetTopicForm();
         return true;
       }
+      
+      // エラーレスポンスを処理
+      if (response.status === 409) {
+        const errorData = await response.json();
+        console.error("Topic already exists:", errorData.error);
+        alert("同じタイトルのトピックが既に存在します");
+      }
       return false;
     } catch (error) {
       console.error("Error updating topic:", error);
       return false;
+    } finally {
+      setIsUpdating(false);
     }
   };
 
   //トピックの削除
   const handleDeleteTopic = async (topicId: string) => {
+    if (isDeleting) return false;
+    
+    setIsDeleting(true);
     try {
       const response = await fetch(`/api/topics/${topicId}`, {
         method: "DELETE",
@@ -145,6 +173,8 @@ export const useTopics = (initialTopics: TopicWithBookmarkCount[] = []) => {
     } catch (error) {
       console.error("Error deleting topic:", error);
       return false;
+    } finally {
+      setIsDeleting(false);
     }
   };
 
@@ -160,6 +190,11 @@ export const useTopics = (initialTopics: TopicWithBookmarkCount[] = []) => {
     topicForm,
     setTopicForm,
     editingTopic,
+
+    //処理中状態
+    isCreating,
+    isUpdating,
+    isDeleting,
 
     //操作関数
     setSelectedTopicId,

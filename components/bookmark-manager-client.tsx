@@ -137,6 +137,8 @@ export const BookmarkManagerClient: React.FC<BookmarkManagerClientProps> = ({
           onTopicCreate={handleTopicCreate}
           showTopicModal={modalsHook.showTopicModal}
           setShowTopicModal={modalsHook.setShowTopicModal}
+          isCreating={topicsHook.isCreating}
+          isDeleting={topicsHook.isDeleting}
         />
 
         <SidebarInset className="flex-1">
@@ -243,6 +245,8 @@ export const BookmarkManagerClient: React.FC<BookmarkManagerClientProps> = ({
         topicForm={topicsHook.topicForm}
         setTopicForm={topicsHook.setTopicForm}
         onSubmit={handleTopicModalSubmit}
+        isCreating={topicsHook.isCreating}
+        isUpdating={topicsHook.isUpdating}
       />
 
       <BookmarkModal

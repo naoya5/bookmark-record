@@ -35,6 +35,8 @@ interface TopicModalProps {
     }>
   >;
   onSubmit: () => void;
+  isCreating?: boolean;
+  isUpdating?: boolean;
 }
 
 export const TopicModal: React.FC<TopicModalProps> = ({
@@ -44,6 +46,8 @@ export const TopicModal: React.FC<TopicModalProps> = ({
   topicForm,
   setTopicForm,
   onSubmit,
+  isCreating = false,
+  isUpdating = false,
 }) => {
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
@@ -150,10 +154,10 @@ export const TopicModal: React.FC<TopicModalProps> = ({
           </Button>
           <Button
             onClick={onSubmit}
-            disabled={!topicForm.title.trim()}
-            className="bg-gradient-to-r from-amber-500 to-orange-500 hover:opacity-80 text-white rounded-xl shadow-sm"
+            disabled={!topicForm.title.trim() || isCreating || isUpdating}
+            className="bg-gradient-to-r from-amber-500 to-orange-500 hover:opacity-80 text-white rounded-xl shadow-sm disabled:opacity-50"
           >
-            {editingTopic ? "更新" : "作成"}
+            {isCreating || isUpdating ? "処理中..." : editingTopic ? "更新" : "作成"}
           </Button>
         </div>
       </DialogContent>
