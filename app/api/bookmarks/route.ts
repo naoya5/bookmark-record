@@ -88,16 +88,11 @@ export async function POST(request: NextRequest) {
     );
   }
 }
+
+//TODO: 複数のブックマークを一括で作成する
 /**
  * 複数のブックマークを一括で作成する
  *
  * @param request - リクエストオブジェクト（url, description, topicIdを含む）
  * @returns 作成されたブックマーク情報
  */
-export async function POST(request: NextRequest){
-  //TODO: URLのバリデーションとURLの分割
-  try{
-    const body = await request.json();
-    const {urls, description, topicId} = body;
-  }
-}
