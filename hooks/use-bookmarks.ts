@@ -31,6 +31,9 @@ export const useBookmarks = (
     url: "",
     description: "",
   });
+  const [isCreating, setIsCreating] = useState(false);
+  const [isUpdating, setIsUpdating] = useState(false);
+
   // 選択されたトピックが変更された時にフォームのトピックIDを更新
   useEffect(() => {
     setBookmarkForm((prev) => ({ ...prev, topicId: topicId || "" }));
@@ -58,6 +61,9 @@ export const useBookmarks = (
 
   //ブックマークの作成
   const handleCreateBookmark = async () => {
+    if (isCreating) return false; // 二重送信防止
+
+    setIsCreating(true);
     try {
       const response = await fetch("/api/bookmarks", {
         method: "POST",
@@ -82,13 +88,16 @@ export const useBookmarks = (
     } catch (error) {
       console.error("Error creating bookmark:", error);
       return false;
+    } finally {
+      setIsCreating(false);
     }
   };
 
   //ブックマークの更新
   const handleUpdateBookmark = async () => {
-    if (!editingBookmark) return false;
+    if (!editingBookmark || isUpdating) return false; // 二重送信防止
 
+    setIsUpdating(true);
     try {
       const response = await fetch(`/api/bookmarks/${editingBookmark.id}`, {
         method: "PUT",
@@ -112,6 +121,8 @@ export const useBookmarks = (
     } catch (error) {
       console.error("Error updating bookmark:", error);
       return false;
+    } finally {
+      setIsUpdating(false);
     }
   };
 
@@ -145,6 +156,10 @@ export const useBookmarks = (
     bookmarkForm,
     setBookmarkForm,
     editingBookmark,
+
+    // 処理中状態
+    isCreating,
+    isUpdating,
 
     // 操作関数
     openEditBookmark,
