@@ -257,6 +257,8 @@ export const BookmarkManagerClient: React.FC<BookmarkManagerClientProps> = ({
         bookmarkForm={bookmarksHook.bookmarkForm}
         setBookmarkForm={bookmarksHook.setBookmarkForm}
         onSubmit={handleBookmarkModalSubmit}
+        isCreating={bookmarksHook.isCreating}
+        isUpdating={bookmarksHook.isUpdating}
       />
 
       <AiQuestionModal

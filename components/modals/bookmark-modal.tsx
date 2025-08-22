@@ -51,6 +51,8 @@ interface BookmarkModalProps {
     }>
   >;
   onSubmit: () => void;
+  isCreating?: boolean;
+  isUpdating?: boolean;
 }
 
 export const BookmarkModal: React.FC<BookmarkModalProps> = ({
@@ -61,6 +63,8 @@ export const BookmarkModal: React.FC<BookmarkModalProps> = ({
   bookmarkForm,
   setBookmarkForm,
   onSubmit,
+  isCreating = false,
+  isUpdating = false,
 }) => {
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
@@ -162,10 +166,10 @@ export const BookmarkModal: React.FC<BookmarkModalProps> = ({
           </Button>
           <Button
             onClick={onSubmit}
-            disabled={!bookmarkForm.url.trim() || !isValidUrl(bookmarkForm.url)}
-            className="bg-gradient-to-r from-amber-500 to-orange-500 hover:opacity-80 text-white rounded-xl shadow-sm"
+            disabled={!bookmarkForm.url.trim() || !isValidUrl(bookmarkForm.url) || isCreating || isUpdating}
+            className="bg-gradient-to-r from-amber-500 to-orange-500 hover:opacity-80 text-white rounded-xl shadow-sm disabled:opacity-50"
           >
-            {editingBookmark ? "更新" : "追加"}
+            {isCreating || isUpdating ? "処理中..." : editingBookmark ? "更新" : "追加"}
           </Button>
         </div>
       </DialogContent>
